@@ -19,14 +19,60 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 export default function Login() {
 	const [visible, setVisible] = React.useState<boolean>(false);
+	const [role, setRole] = React.useState<string | null>(null);
+	const [loading, setLoading] = React.useState(false);
+	const [error, setError] = React.useState('');
+	const router = useRouter();
 
 	const handleVisible = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		setVisible(!visible);
+	};
+
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const data = e.target as HTMLFormElement;
+
+		const payload = {
+			username: data.username.value,
+			password: data.password.value,
+			role: role,
+		};
+
+		for (const key in payload) {
+			if (!payload[key as keyof typeof payload]) {
+				return;
+			}
+		}
+
+		setError('');
+		setLoading(true);
+
+		const res = (await signIn('credentials', {
+			...payload,
+			redirect: false,
+		})) as
+			| undefined
+			| {
+					error?: string;
+					ok: boolean;
+					status: number;
+					url: string | null;
+			  };
+
+		if (res?.error) {
+			setError('Username atau password salah!');
+		} else if (res?.ok) {
+			router.push('/dashboard');
+		}
+
+		setLoading(false);
 	};
 
 	return (
@@ -54,10 +100,19 @@ export default function Login() {
 				<p className="px-3 mt-1 text-base font-normal w-full text-zinc-500">
 					Masukan Infomasi yang Diminta.
 				</p>
-				<form className="mt-3 w-full p-2 flex flex-col gap-3">
-					<Input placeholder="Username" />
+				{error && (
+					<p className="px-3 mt-1 text-base font-normal w-full text-red-500">
+						{error}
+					</p>
+				)}
+				<form
+					onSubmit={handleLogin}
+					className="mt-3 w-full p-2 flex flex-col gap-3"
+				>
+					<Input name="username" placeholder="Username" />
 					<div className="relative">
 						<Input
+							name="password"
 							placeholder="Password"
 							type={visible ? 'text' : 'password'}
 						/>
@@ -70,7 +125,7 @@ export default function Login() {
 						</Button>
 					</div>
 
-					<Select>
+					<Select onValueChange={setRole}>
 						<SelectTrigger className="w-full">
 							<SelectValue placeholder="Pilih Status Anda" />
 						</SelectTrigger>
@@ -94,7 +149,13 @@ export default function Login() {
 						type="submit"
 						className="cursor-pointer flex items-center gap-2 bg-sky-800 hover:bg-sky-900 active:bg-sky-900 focus:bg-sky-800 text-zinc-50 px-4 py-2"
 					>
-						<LogIn /> Login
+						{loading ? (
+							'Loading...'
+						) : (
+							<>
+								<LogIn /> Login
+							</>
+						)}
 					</Button>
 				</form>
 				<footer className="mt-3 text-sm text-zinc-500">

@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 
 import * as React from 'react';
 
@@ -61,6 +63,7 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 }) {
 	const pathname = usePathname();
+	const { data: session } = useSession();
 	return (
 		<SidebarProvider>
 			<Sidebar>
@@ -102,8 +105,9 @@ export default function DashboardLayout({
 								))}
 								<SidebarMenuItem className="text-lg font-normal text-zinc-800 w-full py-1">
 									<Button
+										onClick={() => signOut()}
 										type="button"
-										className="text-lg font-normal text-zinc-800 justify-start w-full hover:text-zinc-100 hover:bg-sky-800 px-3 py-2 rounded-sm flex items-center gap-2 bg-transparent border-0"
+										className="cursor-pointer text-lg font-normal text-zinc-800 justify-start w-full hover:text-zinc-100 hover:bg-sky-800 px-3 py-2 rounded-sm flex items-center gap-2 bg-transparent border-0"
 									>
 										<LogOut /> Logout
 									</Button>
@@ -130,9 +134,11 @@ export default function DashboardLayout({
 						/>
 						<div>
 							<h1 className="text-zinc-900 ont-medium text-base">
-								John Doe
+								{session?.user?.name}
 							</h1>
-							<p className="text-zinc-600 text-sm -mt-1">Admin</p>
+							<p className="text-zinc-600 text-sm -mt-1">
+								{session?.user?.role}
+							</p>
 						</div>
 					</div>
 				</nav>
