@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { auth } from '@/lib/next_auth';
+import { getToken } from 'next-auth/jwt';
 
 export async function middleware(request: NextRequest) {
-	const session = await auth();
+	const session = await getToken({
+		req: request,
+		secret: process.env.SECRET_TOKEN,
+	});
 
 	const { pathname } = request.nextUrl;
 
