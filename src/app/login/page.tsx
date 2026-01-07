@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {
 	Eye,
 	EyeClosed,
@@ -79,14 +80,15 @@ export default function Login() {
 		<main className="w-full h-screen justify-center flex items-center p-4 bg-zinc-100">
 			<div className="w-full max-w-md flex flex-col items-center px-4 py-12 rounded-lg border border-zinc-200 shadow-2xl shadow-zinc-400">
 				<div className="w-full border-b border-zinc-300 flex items-center gap-2 px-4 pt-2 pb-4 justify-center">
-					<GraduationCap
-						className="text-sky-800"
+					<Image
+						src="/unikma.jpg"
+						alt="UNIKMA Logo"
 						width={80}
 						height={80}
 					/>
 					<div>
 						<h1 className="text-2xl font-black text-sky-800">
-							SIAKAD
+							UNIKMA
 						</h1>
 						<p className="text-zinc-800">
 							Sistem Informasi Akademik

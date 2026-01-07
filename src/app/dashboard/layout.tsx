@@ -26,6 +26,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 import * as React from 'react';
 
@@ -70,14 +71,15 @@ export default function DashboardLayout({
 				<SidebarContent className="bg-zinc-100">
 					<SidebarGroup>
 						<div className="w-full border-b border-zinc-300 flex items-center gap-2 px-4 pt-2 pb-4 justify-center">
-							<GraduationCap
-								className="text-sky-800"
+							<Image
+								src="/unikma.jpg"
+								alt="UNIKMA Logo"
 								width={40}
 								height={40}
 							/>
 							<div>
 								<h1 className="text-xl font-black text-sky-800">
-									SIAKAD
+									UNIKMA
 								</h1>
 								<p className="text-zinc-800 text-xs">
 									Sistem Informasi Akademik

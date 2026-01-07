@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Outfit } from 'next/font/google';
+import { Jost } from 'next/font/google';
 import Container from './container';
 import './globals.css';
 
-const geistSans = Outfit({
-	variable: '--font-geist-sans',
+const jost = Jost({
 	subsets: ['latin'],
+	variable: '--font-jost',
 });
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default function RootLayout({
 			<head>
 				<meta name="theme-color" content="#0f172a" />
 			</head>
-			<body className={`${geistSans.variable} antialiased`}>
+			<body className={`${jost.variable} font-jost antialiased`}>
 				<Container>{children}</Container>
 			</body>
 		</html>
