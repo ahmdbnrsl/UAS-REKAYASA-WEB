@@ -96,7 +96,7 @@ export default function ModalTambah() {
 			{mahasiswa && matakuliah && (
 				<div className="bg-zinc-100 w-full h-full md:h-auto md:max-w-md flex flex-col items-center px-4 py-12 md:rounded-lg md:border md:border-zinc-200 md:shadow-2xl md:shadow-zinc-400">
 					<h1 className="flex items-center gap-2 w-full mt-4 px-3 text-xl font-semibold">
-						Tambah Matakuliah
+						Tambah Nilai Mahasiswa
 					</h1>
 					<p className="px-3 mt-1 text-base font-normal w-full text-zinc-500">
 						Masukan Infomasi yang Diminta.
